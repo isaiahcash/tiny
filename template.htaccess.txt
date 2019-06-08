@@ -1,0 +1,8 @@
+#This file should be placed at the same directory level as the 'tiny' folder.
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI}  ^/tiny/([^/]+)/?$    [NC]
+RewriteRule .* tiny/index.php?url=%1 [L]
