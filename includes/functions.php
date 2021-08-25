@@ -9,24 +9,32 @@ function start_page()
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>Tiny URL Service</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://isaiahcash.com/tiny/includes/css/style.css">
+
+        <link rel="stylesheet" href="/tiny/includes/css/font-awesome.css">
+        <link rel="stylesheet" href="/tiny/includes/css/bootstrap.css">
+
+        <link rel="stylesheet" href="https://isaiahcash.com/business/includes/source/datatables/datatables.css">
+        <link rel="stylesheet" href="https://isaiahcash.com/business/includes/source/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.css">
+
+        <link rel="stylesheet" href="/tiny/includes/css/style.css">
+
     </head>
     <body>
-    <div class="d-block" style="background-color: #e9ecef">
-        <a class="btn btn-primary btn-large m-1" href="/home/projects.php"><i class="fas fa-arrow-left"></i> Return to Isaiah's Website</a>
-    </div>
     <?php
 }
 
 function script_includes()
 {
     ?>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://isaiahcash.com/tiny/includes/js/scripts.js"></script>
+    <script src="/tiny/includes/js/jquery-3.js"></script>
+    <script src="/tiny/includes/js/bootstrap.js"></script>
+    <script src="/tiny/includes/js/popper.js"></script>
+
+
+    <script src="https://isaiahcash.com/rake/includes/source/datatables/datatables.js"></script>
+    <script src="https://isaiahcash.com/rake/includes/source/datatables/DataTables-1.10.18/js/dataTables.bootstrap4.js"></script>
+
+    <script src="/tiny/includes/js/scripts.js"></script>
     <?php
 }
 
@@ -62,8 +70,8 @@ function create_new_url($full_url)
 {
     $short_key = generate_short_key();
 
-    $params = array("short_key" => $short_key, "full_url" => $full_url);
-    $sql = "INSERT INTO urls (short_key, full_url) VALUES (:short_key, :full_url)";
+    $params = array("short_key" => $short_key, "full_url" => $full_url, "date_created" => date('Y-m-d H:i:s'));
+    $sql = "INSERT INTO urls (short_key, full_url, date_created) VALUES (:short_key, :full_url, :date_created)";
     $query = DB::query($sql, $params);
 
     if($query != false)
@@ -135,10 +143,28 @@ function push_client_info($url_id)
     $client_info .= "\r\nAgent            " . $data->agent();
     $client_info .= "\r\nReferer          " . $data->referer();
     $client_info .= "\r\nDate             " . $data->getdate();
-    $sql = "INSERT INTO hits (url_id, client_info) VALUES (:url_id, :client_info)";
-    $params = array("url_id" => $url_id, "client_info" => $client_info);
+
+    $hit_timestamp = date('Y-m-d H:i:s');
+
+    $sql = "INSERT INTO hits (url_id, client_info, hit_timestamp) VALUES (:url_id, :client_info, :hit_timestamp)";
+    $params = array("url_id" => $url_id, "client_info" => $client_info, "hit_timestamp" => $hit_timestamp);
     $query = DB::query($sql, $params);
 
     return $query;
 
+}
+
+function get_button($rand, $short_key)
+{
+    $tiny_address = "https://isaiahcash.com/tiny/";
+
+    $button =
+        "<div class='input-group mb-2'>"
+        . "<input type='text' id='copy_url-" . $rand . "' class='form-control' placeholder='URL' value='" . $tiny_address . $short_key . "' contenteditable='true' readonly='true'>"
+        . "<div class='input-group-append'>"
+        . "<button class='btn btn-success' type='button' id='click_copy-" . $rand . "' onclick='copyText(" . $rand . ")'>Click to copy!</button>"
+        . "</div>"
+        . "</div>";
+
+    return $button;
 }

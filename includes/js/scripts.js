@@ -1,15 +1,95 @@
-$("#submit_button").click(function(){
-    console.log("clicked");
-    var full_url = $("#full_url").val();
+urls = $("#urls").DataTable({
+    "ajax" : {
+        "url": "ajax_urls.php",
+        "type": "POST"
+    },
+    "columns": [
+        {
+            "data": "url_id"
 
-    $.post('ajax.php', {full_url: full_url},
-        function(data){
+        },
+        {
+            "data": "short_key"
+        },
+        {
+            "data": "tiny_url"
+        },
+        {
+            "data": "full_url"
+
+        },
+        {"data": "date_created"}
+    ],
+    "stateSave": true,
+    "sScrollX": "100%",
+    "responsive": true
+});
+
+hits = $("#hits").DataTable({
+    "order" : [[3, 'desc']],
+    "ajax" : {
+        "url": "ajax_hits.php",
+        "type": "POST"
+    },
+    "columns": [
+        {
+            "data": "short_key"
+        },
+        {
+            "data": "full_url"
+        },
+        {
+            "data": "client_info"
+        },
+        {
+            "data": "hit_timestamp"
+        }
+    ],
+    "stateSave": true,
+    "sScrollX": "100%",
+    "responsive": true
+});
+
+
+
+
+$('form').on('submit', function (e) {
+
+    e.preventDefault();
+
+    $.ajax({
+        type: 'post',
+        url: 'ajax_create.php',
+        data: $('form').serialize(),
+        success: function (data) {
+
             console.log(data);
             data = JSON.parse(data);
             show_alert(data['flag'], data['message']);
+
+            grecaptcha.reset();
+
+            urls.ajax.reload(null, false);
         }
-    );
+    });
+
 });
+//
+//
+// $("#submit_button").click(function(){
+//     console.log("clicked");
+//     var full_url = $("#full_url").val();
+//
+//     $.post('ajax_create.php', {full_url: full_url},
+//         function(data){
+//             console.log(data);
+//             data = JSON.parse(data);
+//             show_alert(data['flag'], data['message']);
+//
+//             urls.ajax.reload(null, false);
+//         }
+//     );
+// });
 
 
 function show_alert(flag, message)
@@ -22,7 +102,7 @@ function show_alert(flag, message)
 }
 
 
-function copy_text(rand) {
+function copyText(rand) {
     /* Get the text field */
     var url_field = $("#copy_url-" + rand);
 
@@ -34,3 +114,4 @@ function copy_text(rand) {
     document.execCommand("copy");
 
 }
+
