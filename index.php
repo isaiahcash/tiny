@@ -30,7 +30,7 @@ navigate_home();
                 <input type="text" id="full_url" name="full_url" class="form-control">
                 <br>
 
-                <div class="g-recaptcha" data-sitekey="6LcK1gUcAAAAAA7JkydG_qI3GOSnJnfXLFvXEKDb"></div>
+                <div class="g-recaptcha" data-sitekey="<?php echo $recaptcha_public_key; ?>"></div>
 
                 <button type="submit" id="submit_button" name="submit_button" class="btn btn-primary mt-3">Submit</button>
             </form>

@@ -7,11 +7,10 @@ $rand = rand(0, 100);
 
 if(isset($_POST)) {
 
-    $secret_key = "6LcK1gUcAAAAAAoiIyAAcaJZctRB7GcvIR96cuL1";
     $response = $_POST['g-recaptcha-response'];
     $remote_ip = $_SERVER['REMOTE_ADDR'];
 
-    $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $secret_key . "&response=" . $response . "&remoteip=" . $remote_ip;
+    $url = "https://www.google.com/recaptcha/api/siteverify?secret=" . $recaptcha_secret_key . "&response=" . $response . "&remoteip=" . $remote_ip;
     $google_response = file_get_contents($url);
     if ($google_response !== false) {
         $google_response = json_decode($google_response);
