@@ -13,8 +13,8 @@ function start_page()
         <link rel="stylesheet" href="/tiny/includes/css/font-awesome.css">
         <link rel="stylesheet" href="/tiny/includes/css/bootstrap.css">
 
-        <link rel="stylesheet" href="https://isaiahcash.com/business/includes/source/datatables/datatables.css">
-        <link rel="stylesheet" href="https://isaiahcash.com/business/includes/source/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.css">
+        <link rel="stylesheet" href="/tiny/includes/source/datatables/datatables.css">
+        <link rel="stylesheet" href="/tiny/includes/source/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.css">
 
         <link rel="stylesheet" href="/tiny/includes/css/style.css">
 
@@ -31,8 +31,8 @@ function script_includes()
     <script src="/tiny/includes/js/popper.js"></script>
 
 
-    <script src="https://isaiahcash.com/rake/includes/source/datatables/datatables.js"></script>
-    <script src="https://isaiahcash.com/rake/includes/source/datatables/DataTables-1.10.18/js/dataTables.bootstrap4.js"></script>
+    <script src="/tiny/includes/source/datatables/datatables.js"></script>
+    <script src="/tiny/includes/source/datatables/DataTables-1.10.18/js/dataTables.bootstrap4.js"></script>
 
     <script src="/tiny/includes/js/scripts.js"></script>
     <?php
