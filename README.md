@@ -11,7 +11,7 @@ MySQL<br>
 Included Packages:<br>
 jQuery 3.3.1<br>
 Bootstrap 4.1.3<br>
-FontAwesome 5.6.3<br>
+FontAwesome 4.7.0<br>
 
 Host: <br>
 Amazon EC2 RH Instance<br>
