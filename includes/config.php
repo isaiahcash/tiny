@@ -6,6 +6,6 @@ require_once(__DIR__ . '/mysql.php');
 
 require_once(__DIR__ . '/../client_info/data_report.php');
 
-require_once(__DIR__ . '/navigate_home.php');
+require_once(__DIR__ . '/../../shared/navigate_home.php');
 
 require_once(__DIR__ . '/recaptcha_config.php');
